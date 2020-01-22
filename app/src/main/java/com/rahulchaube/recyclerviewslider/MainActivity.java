@@ -30,12 +30,16 @@ public class MainActivity extends AppCompatActivity implements SliderAdapter.Sli
         recyclerView.setLayoutManager(speedyLinearLayoutManager);
         recyclerView.setAdapter(sliderAdapter);
         recyclerView.setHasFixedSize(true);
-
+        speedyLinearLayoutManager.findLastCompletelyVisibleItemPosition();
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                Log.e("Visible position "," "+speedyLinearLayoutManager.findLastCompletelyVisibleItemPosition());
+
                 Log.e("Before slide position ",currentPosition+"  position "+currentPosition % 10);
+                if (speedyLinearLayoutManager.findLastCompletelyVisibleItemPosition()+1!=currentPosition)
+                    currentPosition=speedyLinearLayoutManager.findLastCompletelyVisibleItemPosition()+1;
                 recyclerView.smoothScrollToPosition(currentPosition % 10);
                 if (currentPosition % 10==0)
                     currentPosition=0;
